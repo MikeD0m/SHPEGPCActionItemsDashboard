@@ -1,0 +1,99 @@
+﻿@page "/"
+@rendermode InteractiveServer
+<PageTitle>SHPE GPC Action List Dashboard - Home</PageTitle>
+
+<div class="site-header">
+    <img src="images/gpcLogo.png" alt="SHPE Logo" width="500" />
+    <h1>Welcome back, Presi!</h1>
+</div>
+
+
+<div>
+    <table class="table table-bordered restricted-height">
+        <thead>
+            <tr>
+                <th colspan="7" style="text-align: center"> Current Action Items List </th>
+            </tr>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Priority</th>
+                <th>Due Date</th>
+                <th>Is Done?</th>
+                <th>Date Completed</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var actionItem in actionItemsList)
+            {
+                <tr>
+                    <td>@actionItem.AI_ID</td>
+                    <td>@actionItem.Title</td>
+                    <td>@actionItem.Description</td>
+                    <td>@actionItem.Priority</td>
+                    <td>@actionItem.DueDate.ToLongDateString()</td>
+                    <td>@actionItem.IsDone</td>
+                    <td>@actionItem.CompletedDate.ToString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="lower-action-bar">
+    <button class="btn btn-primary">Create Action Items</button>
+    <button class="btn btn-outline-primary"> View Action Item Stats</button>
+    <button class="btn btn-secondary" @onclick="OpenBoardMembersListModal">Manage Board</button>
+</div>
+
+<!-- MODALS -->
+@if (showBoardMembersListModal)
+{
+    <div class="modal-overlay">
+        <div class="modal-container">
+            <table class="table table-bordered restricted-height">
+                <thead>
+                    <tr>
+                        <th colspan="7" style="text-align: center"> Current Board Members</th>
+                    </tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Position</th>
+                        <th>Start of Term</th>
+                        <th>End of Term</th>
+                        <th colspan="2"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var boardMember in boardMembersList)
+                    {
+                        <tr>
+                            <td>@boardMember.Board_ID</td>
+                            <td>@boardMember.FirstName</td>
+                            <td>@boardMember.LastName</td>
+                            <td>@boardMember.Email</td>
+                            <td>@boardMember.Position</td>
+                            <td>@boardMember.TermStart.ToLongDateString()</td>
+                            <td>@boardMember.TermEnd.ToLongDateString()</td>
+                            <td>hello</td>
+                            <td>world</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="lower-action-bar">
+                <button class="btn btn-success">
+                    Add new board member
+                </button>
+                <button class="btn btn-warning" @onclick="CloseBoardMembersListModal">
+                    Exit
+                </button>
+            </div>
+
+        </div>
+    </div>
+}
+
